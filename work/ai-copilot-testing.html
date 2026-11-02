@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="#0b1220" name="theme-color"/>
+<title>AI Copilot Workflow Testing | Riya Rakholiya</title>
+<meta content="A case study of an AI copilot that tests workflow nodes and suggests repairs, built across Python and React." name="description"/>
+<link href="https://riya-086.github.io/riya-portfolio/work/widget-consolidation.html" rel="canonical"/>
+<meta content="article" property="og:type"/>
+<meta content="Riya Rakholiya" property="og:site_name"/>
+<meta content="Merging two chat codebases behind a regression harness | Riya Rakholiya" property="og:title"/>
+<meta content="The embeddable chat widget lived in its own repository with a copy of the chat UI, so every fix had to be made twice. I moved it into the main bot application behind configuration flags, migrated the build to pnpm, and built a Vitest and Playwright harness to prove customer behaviour did not change." property="og:description"/>
+<meta content="https://riya-086.github.io/riya-portfolio/work/widget-consolidation.html" property="og:url"/>
+<meta content="https://riya-086.github.io/riya-portfolio/assets/og-image.jpg" property="og:image"/>
+<meta content="1200" property="og:image:width"/><meta content="630" property="og:image:height"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<link href="../assets/favicon.svg" rel="icon" type="image/svg+xml"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="../styles.css" rel="stylesheet"/>
+<script defer="" src="../script.js"></script>
+</head><body>
+<a class="skip-link" href="#main">Skip to content</a>
+<div aria-hidden="true" class="reading-line" id="progress"></div>
+<header class="site-header"><nav aria-label="Main navigation" class="nav wrap">
+<a aria-label="Riya Rakholiya, home" class="wordmark" href="../index.html#top"><span aria-hidden="true" class="mark">R<span class="accent">.</span></span><span>Riya Rakholiya</span></a>
+<button aria-controls="navlinks" aria-expanded="false" aria-label="Open menu" class="menu-button" id="menu">☰</button>
+<div class="nav-links" id="navlinks"><a href="../index.html#work">Work</a><a href="../index.html#experience">Experience</a><a href="../index.html#projects">Projects</a><a href="../index.html#skills">Skills</a><a href="../index.html#about">About</a><a class="nav-contact" href="mailto:riyarakholiya8610@gmail.com">Email me <span aria-hidden="true">↗</span></a></div>
+</nav></header>
+<main id="main">
+<div class="wrap" id="top"><a class="crumb" href="../index.html#work">← All case studies</a></div>
+<header class="wrap cs-hero"><p class="kicker">CASE STUDY · AI AGENTS &amp; ENGINEERING</p><h1>An AI copilot that tests the workflows it builds</h1><p class="cs-summary">I built the testing loop that lets a workflow-building copilot check its own output, observe execution results, and attempt targeted repairs. The implementation connects Python orchestration with the existing React workflow runner, keeping automated tests aligned with manual execution.</p><dl class="facts"><div><dt>MY ROLE</dt><dd>End-to-end implementation across backend and frontend</dd></div><div class="full"><dt>STACK</dt><dd><div class="tags"><span>Python</span><span>Quart</span><span>React</span><span>Streaming events</span><span>LLM tool calling</span><span>Workflow execution</span></div></dd></div></dl></header>
+<div class="wrap cs-layout"><nav aria-label="On this page" class="toc"><p>ON THIS PAGE</p><ol><li><a href="#context">Context and problem</a></li><li><a href="#requirements">Requirements</a></li><li><a href="#my-role">My responsibilities</a></li><li><a href="#architecture">How the test loop works</a></li><li><a href="#implementation">Implementation</a></li><li><a href="#decisions">Key decisions and tradeoffs</a></li><li><a href="#challenges">Engineering challenges</a></li><li><a href="#testing">Validation</a></li><li><a href="#deployment">Delivery status</a></li><li><a href="#outcome">Outcome</a></li><li><a href="#learned">Engineering takeaway</a></li></ol></nav>
+<div class="cs-body"><section aria-labelledby="context-h" class="cs-section" id="context"><h2 id="context-h">Context and problem</h2><p>The workflow-building copilot could create or edit nodes, but could not verify them. Testing required a user to manually run a node and feed the result back into the conversation.</p></section><section aria-labelledby="requirements-h" class="cs-section" id="requirements"><h2 id="requirements-h">Requirements</h2><p>Let the copilot request a single-node or whole-workflow test; execute through the builder’s established run path; return meaningful status and diagnostic information; support retries without unbounded loops.</p></section><section aria-labelledby="my-role-h" class="cs-section" id="my-role"><h2 id="my-role-h">My responsibilities</h2><p>I implemented the backend testing orchestration in Python and connected it to React builder events and node-running behavior. This included test-result normalization, workflow sequence handling, user-facing status, and fixes for special node types.</p></section><section aria-labelledby="architecture-h" class="cs-section" id="architecture"><h2 id="architecture-h">How the test loop works</h2><p>The copilot proposes a node or workflow change, requests a test, and pauses. A streaming event prompts the React builder to use the same node runner as a manual Play action. Results return to the copilot, which identifies an appropriate repair target and can request a bounded retry.</p></section><section aria-labelledby="implementation-h" class="cs-section" id="implementation"><h2 id="implementation-h">Implementation</h2><p>For node tests, I connected the copilot request to the builder runner, resolved required inputs, collected status and diagnostic output, and sent normalized results back into the copilot session. For whole-workflow tests, the loop proceeds one node at a time and follows the branch actually taken.</p></section><section aria-labelledby="decisions-h" class="cs-section" id="decisions"><h2 id="decisions-h">Key decisions and tradeoffs</h2><p>Running tests through the existing UI path reduced discrepancies between AI-triggered and manual behavior. Pausing and resuming across events requires careful state handling, but preserves a single execution contract. Retry limits prevent uncontrolled self-repair loops.</p></section><section aria-labelledby="challenges-h" class="cs-section" id="challenges"><h2 id="challenges-h">Engineering challenges</h2><p>Conditional branches require prior node outputs to route correctly. Some generator, transform, and human-intervention nodes could appear successful without meaningful output, requiring more careful status interpretation. UI state and events also had to remain synchronized.</p></section><section aria-labelledby="testing-h" class="cs-section" id="testing"><h2 id="testing-h">Validation</h2><p>I validated this manually, through iterative prototypes in the workflow builder; the feature did not have its own automated test suite. Copilot-run tests appeared in the existing run history, so I could compare them side by side with runs launched by hand.</p></section><section aria-labelledby="deployment-h" class="cs-section" id="deployment"><h2 id="deployment-h">Delivery status</h2><p>The backend and frontend changes were merged to the development branches.</p></section><section aria-labelledby="outcome-h" class="cs-section" id="outcome"><h2 id="outcome-h">Outcome</h2><p>The copilot gained a path to request and inspect node and workflow tests and use the results to guide fixes. It could attempt limited self-repair instead of requiring users to run each test and paste results manually.</p></section><section aria-labelledby="learned-h" class="cs-section" id="learned"><h2 id="learned-h">Engineering takeaway</h2><p>AI-generated workflows need feedback from the actual runtime, not only model reasoning. Controlled tool use, explicit execution outcomes, and bounded retries make AI-assisted building easier to validate.</p></section></div></div>
+</main>
+<footer><div class="wrap foot"><span>© <span id="year">2026</span> Riya Rakholiya</span><div>
+<a href="https://github.com/Riya-086" rel="noopener noreferrer" target="_blank">GitHub</a>
+<a href="https://www.linkedin.com/in/riya-rakholiya" rel="noopener noreferrer" target="_blank">LinkedIn</a>
+<a download="" href="../assets/Riya_Rakholiya_Resume.pdf">Résumé</a>
+<a href="#top">Back to top ↑</a></div></div></footer>
+</body>
+</html>

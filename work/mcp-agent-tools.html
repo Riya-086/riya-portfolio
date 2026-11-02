@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="#0b1220" name="theme-color"/>
+<title>MCP Servers as Agent Tools | Riya Rakholiya</title>
+<meta content="A case study of Model Context Protocol tools in agent workflows, with React configuration, Python integration, variables and resilient tracing." name="description"/>
+<link href="https://riya-086.github.io/riya-portfolio/work/widget-consolidation.html" rel="canonical"/>
+<meta content="article" property="og:type"/>
+<meta content="Riya Rakholiya" property="og:site_name"/>
+<meta content="Merging two chat codebases behind a regression harness | Riya Rakholiya" property="og:title"/>
+<meta content="The embeddable chat widget lived in its own repository with a copy of the chat UI, so every fix had to be made twice. I moved it into the main bot application behind configuration flags, migrated the build to pnpm, and built a Vitest and Playwright harness to prove customer behaviour did not change." property="og:description"/>
+<meta content="https://riya-086.github.io/riya-portfolio/work/widget-consolidation.html" property="og:url"/>
+<meta content="https://riya-086.github.io/riya-portfolio/assets/og-image.jpg" property="og:image"/>
+<meta content="1200" property="og:image:width"/><meta content="630" property="og:image:height"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<link href="../assets/favicon.svg" rel="icon" type="image/svg+xml"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="../styles.css" rel="stylesheet"/>
+<script defer="" src="../script.js"></script>
+</head><body>
+<a class="skip-link" href="#main">Skip to content</a>
+<div aria-hidden="true" class="reading-line" id="progress"></div>
+<header class="site-header"><nav aria-label="Main navigation" class="nav wrap">
+<a aria-label="Riya Rakholiya, home" class="wordmark" href="../index.html#top"><span aria-hidden="true" class="mark">R<span class="accent">.</span></span><span>Riya Rakholiya</span></a>
+<button aria-controls="navlinks" aria-expanded="false" aria-label="Open menu" class="menu-button" id="menu">☰</button>
+<div class="nav-links" id="navlinks"><a href="../index.html#work">Work</a><a href="../index.html#experience">Experience</a><a href="../index.html#projects">Projects</a><a href="../index.html#skills">Skills</a><a href="../index.html#about">About</a><a class="nav-contact" href="mailto:riyarakholiya8610@gmail.com">Email me <span aria-hidden="true">↗</span></a></div>
+</nav></header>
+<main id="main">
+<div class="wrap" id="top"><a class="crumb" href="../index.html#work">← All case studies</a></div>
+<header class="wrap cs-hero"><p class="kicker">CASE STUDY · AI AGENTS &amp; INTEGRATIONS</p><h1>MCP servers as agent tools</h1><p class="cs-summary">I contributed workflow-builder integration for Model Context Protocol (MCP) tools, helping agents use configured external tools with predictable inputs and resilient tracing. This work built on an existing backend integration.</p><dl class="facts"><div><dt>MY ROLE</dt><dd>Workflow-builder integration and related Python/React updates</dd></div><div class="full"><dt>STACK</dt><dd><div class="tags"><span>React</span><span>Python</span><span>Pydantic</span><span>MCP</span><span>Agent tools</span></div></dd></div></dl></header>
+<div class="wrap cs-layout"><nav aria-label="On this page" class="toc"><p>ON THIS PAGE</p><ol><li><a href="#mcp-section-0">Context and problem</a></li><li><a href="#mcp-section-1">Requirements</a></li><li><a href="#mcp-section-2">My responsibilities</a></li><li><a href="#mcp-section-3">Architecture and flow</a></li><li><a href="#mcp-section-4">Implementation</a></li><li><a href="#mcp-section-5">Engineering decisions</a></li><li><a href="#mcp-section-6">Challenges</a></li><li><a href="#mcp-section-7">Validation</a></li><li><a href="#mcp-section-8">Delivery status</a></li><li><a href="#mcp-section-9">Outcome</a></li><li><a href="#mcp-section-10">Takeaway</a></li></ol></nav>
+<div class="cs-body"><section aria-labelledby="mcp-section-0-heading" class="cs-section" id="mcp-section-0"><h2 id="mcp-section-0-heading">Context and problem</h2><p>AI workflow builders need a way to make external tools available to agents without forcing users to hand-code every integration.</p></section><section aria-labelledby="mcp-section-1-heading" class="cs-section" id="mcp-section-1"><h2 id="mcp-section-1-heading">Requirements</h2><p>Represent MCP server connections as configurable workflow nodes; allow reusable or inline configurations; support user-defined variables; keep execution diagnostics from interrupting the workflow.</p></section><section aria-labelledby="mcp-section-2-heading" class="cs-section" id="mcp-section-2"><h2 id="mcp-section-2-heading">My responsibilities</h2><p>I worked on the frontend node and associated Python-facing data handling so users could attach configured MCP servers as agent tools. The existing MCP backend foundation was developed by a teammate.</p></section><section aria-labelledby="mcp-section-3-heading" class="cs-section" id="mcp-section-3"><h2 id="mcp-section-3-heading">Architecture and flow</h2><p>A user selects or configures an MCP server in the builder. The workflow carries that configuration into the agent tool setup, where tool calls can be performed through the existing integration. Diagnostic information is captured separately.</p></section><section aria-labelledby="mcp-section-4-heading" class="cs-section" id="mcp-section-4"><h2 id="mcp-section-4-heading">Implementation</h2><p>The builder supports selecting a server from a library or configuring it inline. Variable placeholders can be resolved in configuration fields, and typed structures help keep values consistent across components.</p></section><section aria-labelledby="mcp-section-5-heading" class="cs-section" id="mcp-section-5"><h2 id="mcp-section-5-heading">Engineering decisions</h2><p>Keeping the server configuration in a dedicated node makes the agent workflow explicit and editable. Defensive tracing treats missing or malformed diagnostic information as nonfatal rather than risking a workflow failure.</p></section><section aria-labelledby="mcp-section-6-heading" class="cs-section" id="mcp-section-6"><h2 id="mcp-section-6-heading">Challenges</h2><p>Server configuration and variable substitution must remain consistent across UI and backend boundaries; diagnostic collection must be robust when external tools behave unexpectedly.</p></section><section aria-labelledby="mcp-section-7-heading" class="cs-section" id="mcp-section-7"><h2 id="mcp-section-7-heading">Validation</h2><p>I validated the MCP node, variable placeholders and tool-call tracing manually while building them, including local scripts that checked placeholder validation in MCP server settings.</p></section><section aria-labelledby="mcp-section-8-heading" class="cs-section" id="mcp-section-8"><h2 id="mcp-section-8-heading">Delivery status</h2><p>The changes were merged to the development branches of the services involved.</p></section><section aria-labelledby="mcp-section-9-heading" class="cs-section" id="mcp-section-9"><h2 id="mcp-section-9-heading">Outcome</h2><p>The workflow builder gained a usable way to attach MCP tool servers to agents while preserving configuration flexibility and safer diagnostic handling.</p></section><section aria-labelledby="mcp-section-10-heading" class="cs-section" id="mcp-section-10"><h2 id="mcp-section-10-heading">Takeaway</h2><p>Agent-tool integrations need well-defined configuration contracts, careful validation, and observability that does not disrupt the work it is meant to observe.</p></section></div></div>
+</main>
+<footer><div class="wrap foot"><span>© <span id="year">2026</span> Riya Rakholiya</span><div>
+<a href="https://github.com/Riya-086" rel="noopener noreferrer" target="_blank">GitHub</a>
+<a href="https://www.linkedin.com/in/riya-rakholiya" rel="noopener noreferrer" target="_blank">LinkedIn</a>
+<a download="" href="../assets/Riya_Rakholiya_Resume.pdf">Résumé</a>
+<a href="#top">Back to top ↑</a></div></div></footer>
+</body>
+</html>

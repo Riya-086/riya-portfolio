@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://riya-086.github.io/riya-portfolio/sitemap.xml
